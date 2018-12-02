@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>autocomplete</title>
+</head>
+
+<body>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+<script>
+
+$(function() {
+
+    $( "#drug_name" ).autocomplete({
+        source: 'search.php'
+    });
+
+    $( "#company" ).autocomplete({
+        source: 'search1.php'
+    });
+
+});
+
+</script>
+
+<script type="text/javascript">
+
+//donot play here
+    function result(){
+
+       var drug_name = document.getElementById("drug_name").value ;
+       var company   = document.getElementById("company").value ;
+       var quantity  = document.getElementById("quantity").value ;
+       var url       = "bill_generate.php?dname="+drug_name+"&company="+company+"&quantity="+quantity;
+       console.log(url);
+       var xhr = new XMLHttpRequest();
+       xhr.onreadystatechange = function(){
+        alert(xhr.responseText);
+       }
+       xhr.open("GET", url , false);
+       xhr.send(null);
+       console.log(xhr.status);
+       if(xhr.status == 200 || xhr.status == 0){
+       
+
+       var rawFile = new XMLHttpRequest();
+       rawFile.open("GET", "data.txt" , false);
+       rawFile.onreadystatechange = function ()
+        {
+            console.log(rawFile.status);
+            console.log(rawFile.readyState);
+            if(rawFile.readyState == 4)
+             {
+                  if(rawFile.status == 200 || rawFile.status == 0 )
+                     {
+                          
+                              var allText = rawFile.responseText;
+                              alert(allText);
+                              console.log(allText);
+                              var data_set = allText.split(",");
+
+                            var table_body = document.getElementById('table_body');
+                            
+                            var table_row = document.createElement('tr');
+                            
+                            var table_data_0 = document.createElement('td');
+                            table_data_0.appendChild(document.createTextNode(data_set[0]));
+
+                            var table_data_1 = document.createElement('td');
+                            table_data_1.appendChild(document.createTextNode(data_set[1]));
+
+                            var table_data_2 = document.createElement('td');
+                            table_data_2.appendChild(document.createTextNode(data_set[2]));
+
+                            var table_data_3 = document.createElement('td');
+                            table_data_3.appendChild(document.createTextNode(document.getElementById("quantity").value));
+
+                            var table_data_4 = document.createElement('td');
+                            table_data_4.appendChild(document.createTextNode(data_set[2]*document.getElementById("quantity").value));
+
+                            table_row.appendChild(table_data_0);
+                            table_row.appendChild(table_data_1);
+                            table_row.appendChild(table_data_2);
+                            table_row.appendChild(table_data_3);
+                            table_row.appendChild(table_data_4);
+
+                            table_body.appendChild(table_row);
+
+                             document.getElementById("drug_name").value = "";
+                             document.getElementById("company").value   = "";
+                             document.getElementById("quantity").value  = "";
+
+
+                     }
+             }
+        }
+           rawFile.send(null);
+        
+       } 
+
+    }
+
+</script>
+
+
+
+<div class="ui-widget">
+
+    <label for="drug_name">Drug Name: </label>
+
+    <input type="text" id="drug_name" name="dname">
+
+    &nbsp &nbsp
+
+    <label for="comapany">Company : &nbsp </label>
+
+    <input type="text" name="comapany" id="company">
+    
+    <br><br>
+
+    <label>Quantity:</label>
+
+    &nbsp &nbsp
+
+    <input type="text" name="quantity" id="quantity">
+
+     &nbsp &nbsp
+
+   <button id="bttn" onclick="result()"> Query </button>
+
+</div>	
+
+
+
+<br><br>  
+
+<div id="table">
+
+<table id="result" border="1">
+    
+    <thead>
+        
+        <th>  Drug Name </th>
+        <th>  Company   </th>
+        <th>  Rate      </th>
+        <th>  Quantity  </th>
+        <th>  Price     </th>
+
+    </thead>
+
+    <tbody id="table_body">
+        
+
+
+       
+
+    </tbody>
+
+</table>
+
+</div>
+
+</body>
+
+</html>

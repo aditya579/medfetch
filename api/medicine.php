@@ -72,7 +72,7 @@
 <div class="row">
 
 <div class="col-xs-10">
-<table id="tab">
+<table id="tab" border="1">
 <tr>
 	<th>SHOP NAME&nbsp&nbsp </th>
 	
@@ -85,6 +85,7 @@
 	<th>RATE&nbsp</th>
 	
 	<th>LOCATION&nbsp</th>
+	<th>COST EFFECTIVENESS</th>
 	<th>ADDRESS</th>
 </tr>
 <?php
@@ -127,6 +128,7 @@ if(isset($_POST['submit'])){
     	while ($row1=mysqli_fetch_row($result1)) {
 						
 						if($row1[2]>=10){
+							$costeffectiveness = intval($row1['3']*5*5/1000);
 						 echo '<tr>';
 						 echo '<td>'.$shop_name.'&nbsp'.'</td>';    	
 		    			 
@@ -138,6 +140,7 @@ if(isset($_POST['submit'])){
 		    			 
 		    			 echo '<td>'.$row1[3].'&nbsp'.'</td>';
 		    			 echo '<td>'.$location.'&nbsp'.'</td>';
+		    			 echo '<td>'.$costeffectiveness.'&nbsp'.'</td>';
 		    			 echo '<td>'.$address.'</td>';
 		    			 echo '</tr>';
 						}

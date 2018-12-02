@@ -81,7 +81,7 @@ body {
     document.querySelector(".browser1").setAttribute("src","display_record.php");
   }
   function bill(){
-    document.querySelector(".browser1").setAttribute("src","bill1.php");
+    document.querySelector(".browser1").setAttribute("src","autocomplete_test.html");
   }
 </script>
 </head>

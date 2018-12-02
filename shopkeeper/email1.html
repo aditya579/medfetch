@@ -1,0 +1,36 @@
+var nodemailer = require("/home/aditya/node_modules/nodemailer");
+
+var smtpTransport1 = require("/home/aditya/node_modules/nodemailer-smtp-transport");
+
+
+var smtpTransport = nodemailer.createTransport(smtpTransport1({
+
+    service: 'Gmail',
+    auth: { user: '',// add email
+            pass: '' //add password
+        },   
+}));
+
+
+var mailOptions = {
+
+  from: "pandey.aditya579@gmail.com",
+  to: "sahilathrij@gmail.com",
+  subject: "Hello",
+  generateTextFromHTML: true,
+  html: "<b>Hello world</b>"
+
+};
+
+
+smtpTransport.sendMail(mailOptions, function(error, response) {
+
+  if (error) {
+    console.log(error);
+  } else {
+    console.log(response);
+  }
+
+  smtpTransport.close();
+
+});
